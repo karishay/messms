@@ -4,13 +4,16 @@ import twilio.twiml
 
 app = Flask(__name__)
 
-app.config.from_pyfile('/Users/shannon/src/twilio/config/config.py')
-client = TwilioRestClient(app.config['ACCOUNT_SID'], app.config['AUTH_TOKEN'])
+# if getting variables from config py file use:
+# app.config.from_pyfile('/Users/shannon/src/twilio/config/config.py')
 
-shannon = app.config['SHANNON']
-nic = app.config['NIC']
-twilio_number_uk = app.config['TWILIO_NUMBER_UK']
-twilio_number_us = app.config['TWILIO_NUMBER_US']
+# if using variables from environment variables
+client = TwilioRestClient(os.environ['ACCOUNT_SID'], os.environ['AUTH_TOKEN'])
+
+shannon = os.environ['SHANNON']
+nic = os.environ['NIC']
+twilio_number_uk = os.environ['TWILIO_NUMBER_UK']
+twilio_number_us = os.environ['TWILIO_NUMBER_US']
 
 @app.route("/", methods=['GET', 'POST'])
 
