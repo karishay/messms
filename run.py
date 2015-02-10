@@ -2,11 +2,15 @@ from flask import Flask, request, redirect
 from twilio.rest import TwilioRestClient
 import twilio.twiml
 
-app.config.from_pyfile('config.py')
-
-client = TwilioRestClient(account_sid, auth_token)
-
 app = Flask(__name__)
+
+app.config.from_pyfile('/Users/shannon/src/twilio/config/config.py')
+client = TwilioRestClient(app.config['ACCOUNT_SID'], app.config['AUTH_TOKEN'])
+
+shannon = app.config['SHANNON']
+nic = app.config['NIC']
+twilio_number_uk = app.config['TWILIO_NUMBER_UK']
+twilio_number_us = app.config['TWILIO_NUMBER_US']
 
 @app.route("/", methods=['GET', 'POST'])
 
@@ -23,9 +27,9 @@ def forwardMessages():
     # if it's from Shannon
       forward_number = nic
       from_number = twilio_number_uk
-      #forward to nic
+      #forward to NIC
     else:
-      # if it's from not shannon
+      # if it's from not SHANNON
       forward_number = shannon
       from_number = twilio_number_us
       # forward to Shannon
