@@ -3,10 +3,19 @@ from twilio.rest import TwilioRestClient
 import twilio.twiml
 import os
 
+# log to stderr
+import logging
+from logging import StreamHandler
+
+
 app = Flask(__name__)
+file_handler = StreamHandler()
+app.logger.setLevel(logging.DEBUG)  # set the desired logging level here
+app.logger.addHandler(file_handler)
 
 # PORT IN USE??? port 8000 in place of THE_PORT_NUMBER
 # lsof -t -i tcp:THE_PORT_NUMBER | xargs kill
+# lsof -t -i tcp:8000 | xargs kill
 
 
 # if getting variables from config py file use:
@@ -25,7 +34,7 @@ twilio_number_us = os.environ['TWILIO_NUMBER_US']
 def forwardMessages():
     """Forwards texts from Shannon (US) to Nic (UK) through Twilio API.
     Useful for those without international texting"""
-
+    app.logger.debug("We're in the home request")
     sender = request.values.get("From")
     sms_body = request.values.get("Body")
 
@@ -42,7 +51,7 @@ def forwardMessages():
     forward_message = client.sms.messages.create(to=forward_number, from_=from_number, body=sms_body)
 
     resp = twilio.twiml.Response()
-    print str(resp)
+    app.logger.debug("Response from Twilio: " + str(resp))
     return str(resp)
 
 
