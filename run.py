@@ -38,21 +38,27 @@ def forwardMessages():
     sender = request.values.get("From")
     sms_body = request.values.get("Body")
 
-    if sender == shannon:
-    # if it's from Shannon
-      forward_number = nic
-      from_number = twilio_number_uk
-      #forward to NIC
-    else:
-      # if it's from not SHANNON
-      forward_number = shannon
-      from_number = twilio_number_us
-      # forward to Shannon
-    forward_message = client.sms.messages.create(to=forward_number, from_=from_number, body=sms_body)
+    if sender and body:
 
-    resp = twilio.twiml.Response()
-    app.logger.debug("Response from Twilio: " + str(resp))
-    return str(resp)
+
+      if sender == shannon:
+      # if it's from Shannon
+        forward_number = nic
+        from_number = twilio_number_uk
+        #forward to NIC
+      else:
+        # if it's from not SHANNON
+        forward_number = shannon
+        from_number = twilio_number_us
+        # forward to Shannon
+      forward_message = client.sms.messages.create(to=forward_number, from_=from_number, body=sms_body)
+
+      resp = twilio.twiml.Response()
+      app.logger.debug("Response from Twilio: " + str(resp))
+      return str(resp)
+
+    else:
+      return "Got your request"
 
 
 if __name__ == "__main__":
