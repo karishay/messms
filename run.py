@@ -38,7 +38,7 @@ def forwardMessages():
     sender = request.values.get("From")
     sms_body = request.values.get("Body")
 
-    if sender and body:
+    if sender and sms_body:
 
 
       if sender == shannon:
