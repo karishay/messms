@@ -22,7 +22,8 @@ app.logger.addHandler(file_handler)
 # app.config.from_pyfile('path/to/config/config.py')
 
 # if using variables from environment variables
-print "This is the key value" + os.environ.get('ACCOUNT_SID')
+print "This is the account key value" + os.environ.get('ACCOUNT_SID')
+print "This is the auth token key value" + os.environ.get('AUTH_TOKEN')
 client = TwilioRestClient(os.environ['ACCOUNT_SID'], os.environ['AUTH_TOKEN'])
 
 shannon = os.environ['SHANNON']
